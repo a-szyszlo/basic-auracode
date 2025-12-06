@@ -333,13 +333,21 @@ Razem znajdziemy praktykę, która najlepiej odpowie <strong>Twoim potrzebom</st
             'button_url'     => ''
         ]
     ]);
-    $wp_customize->add_setting('services_list', array('default' => $default_services));
-    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'services_list_control', array(
-        'label' => 'Lista usług (Dodaj nowe w Customizerze)',
+    $wp_customize->add_setting('services_list', array(
+        'default' => $default_services,
+        'sanitize_callback' => function($value) {
+            // Basic JSON validation
+            json_decode($value, true);
+            return (json_last_error() === JSON_ERROR_NONE) ? $value : '[]';
+        }
+    ));
+    $wp_customize->add_control('services_list_control', array(
+        'label' => 'Lista usług (JSON)',
+        'description' => "Użyj pól: title, desc, image, button_enabled (bool), button_text, button_url.",
         'section' => 'services_section',
         'settings' => 'services_list',
-        'type' => 'hidden'
-    )));
+        'type' => 'textarea'
+    ));
 
     // ----------------- Process -----------------
     $wp_customize->add_section('process_section', array(

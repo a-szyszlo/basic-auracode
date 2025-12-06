@@ -58,25 +58,44 @@
                     // === Przycisk CTA ===
                     var $hasButton = $('<label style="display:block;margin-top:10px;">' +
                         '<input type="checkbox" class="service-has-button"> Dodaj przycisk</label>');
-                    var $buttonLink = $('<input type="text" class="widefat service-button-link" placeholder="Link do przycisku" style="margin-top:6px;">');
+                    var $buttonText = $('<input type="text" class="widefat service-button-text" placeholder="Tekst przycisku" style="margin-top:6px;">');
+                    var $buttonUrl = $('<input type="text" class="widefat service-button-url" placeholder="Link do przycisku" style="margin-top:6px;">');
 
-                    $hasButton.find('input').prop('checked', item.hasButton || false);
-                    $buttonLink.val(item.buttonLink || '').toggle(item.hasButton);
+                    var enabled = (typeof item.button_enabled !== 'undefined') ? !!item.button_enabled : !!item.hasButton;
+                    var link    = item.button_url || item.buttonLink || '';
+                    var text    = item.button_text || item.buttonText || '';
+
+                    $hasButton.find('input').prop('checked', enabled);
+                    $buttonText.val(text).toggle(enabled);
+                    $buttonUrl.val(link).toggle(enabled);
 
                     // === Obsługa zmian CTA ===
                     $hasButton.find('input').on('change', function () {
-                        services[index].hasButton = $(this).is(':checked');
-                        if ($(this).is(':checked')) {
-                            $buttonLink.show();
-                        } else {
-                            $buttonLink.hide();
+                        var isOn = $(this).is(':checked');
+                        services[index].button_enabled = isOn;
+                        services[index].hasButton = isOn; // kompatybilność wstecz
+                        $buttonText.toggle(isOn);
+                        $buttonUrl.toggle(isOn);
+                        if (!isOn) {
+                            services[index].button_text = '';
+                            services[index].buttonText = '';
+                            services[index].button_url = '';
                             services[index].buttonLink = '';
                         }
                         save();
                     });
 
-                    $buttonLink.on('input', function () {
-                        services[index].buttonLink = $(this).val();
+                    $buttonText.on('input', function () {
+                        var val = $(this).val();
+                        services[index].button_text = val;
+                        services[index].buttonText = val; // kompatybilność wstecz
+                        save();
+                    });
+
+                    $buttonUrl.on('input', function () {
+                        var val = $(this).val();
+                        services[index].button_url = val;
+                        services[index].buttonLink = val; // kompatybilność wstecz
                         save();
                     });
 
@@ -92,7 +111,8 @@
                         $('<label><strong>Obrazek:</strong></label>'), $imagePreview, $imageInput, $uploadBtn,
                         $('<label><strong>Przycisk:</strong></label>'),
                         $hasButton,
-                        $buttonLink,
+                        $buttonText,
+                        $buttonUrl,
 
                         $remove
                     );
@@ -102,7 +122,8 @@
 
             function save() {
                 var json = JSON.stringify(services);
-                $('#customize-control-services_list_control input[type=hidden]').val(json);
+                var $textarea = $('#customize-control-services_list_control textarea');
+                if ($textarea.length) { $textarea.val(json); }
                 wp.customize('services_list').set(json);
             }
 

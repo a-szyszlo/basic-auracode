@@ -88,11 +88,16 @@ if ($services): ?>
               <h3><?php echo esc_html($service['title']); ?></h3>
               <p><?php echo esc_html($service['desc']); ?></p>
 
-              <?php if (!empty($service['hasButton']) && !empty($service['buttonLink'])): ?>
-                <a href="<?php echo esc_url($service['buttonLink']); ?>" class="service-btn">
-                  Zobacz więcej
-                </a>
-              <?php endif; ?>
+                <?php 
+                  $btnEnabled = !empty($service['button_enabled']) ? $service['button_enabled'] : (!empty($service['hasButton']) ? $service['hasButton'] : false);
+                  $btnUrl     = !empty($service['button_url']) ? $service['button_url'] : (!empty($service['buttonLink']) ? $service['buttonLink'] : '');
+                  $btnText    = !empty($service['button_text']) ? $service['button_text'] : (!empty($service['buttonText']) ? $service['buttonText'] : 'Zobacz więcej');
+                ?>
+                <?php if ($btnEnabled && !empty($btnUrl)) : ?>
+                  <a href="<?php echo esc_url($btnUrl); ?>" class="service-btn">
+                    <?php echo esc_html($btnText); ?>
+                  </a>
+                <?php endif; ?>
             </div>
           </div>
         <?php endforeach; ?>
@@ -135,6 +140,19 @@ if ($services): ?>
     </div>
   </div>
 </section>
+
+<!-- USER CONTENT -->
+<?php if (have_posts()) : ?>
+  <section class="user-content" id="content">
+    <div class="container">
+      <?php while (have_posts()) : the_post(); ?>
+        <div class="entry-content reveal">
+          <?php echo apply_filters('the_content', get_the_content()); ?>
+        </div>
+      <?php endwhile; ?>
+    </div>
+  </section>
+<?php endif; ?>
 
 <!-- PROCESS -->
 <section class="process-section">
