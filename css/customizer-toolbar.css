@@ -1,0 +1,21 @@
+.customizer-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.customizer-toolbar button {
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  padding: 3px 7px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.customizer-toolbar button:hover {
+  background: #0073aa;
+  color: #fff;
+  border-color: #0073aa; 
+}

@@ -1,0 +1,8 @@
+#customize-control-number_group_2_control, #customize-control-number_group_3_control{
+    margin-top:30px;
+    padding-top:30px;
+    border-top:3px solid #fff;
+}
+#customize-control-number_group_1_control .customize-control-title, #customize-control-number_group_2_control .customize-control-title, #customize-control-number_group_3_control .customize-control-title{
+    font-size:20px;
+}
