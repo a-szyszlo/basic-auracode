@@ -1,0 +1,50 @@
+@use '../mixins' as *;
+
+
+/* Numbers section */
+.numbers-section {
+    padding: 80px 0;
+
+
+    .numbers-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        gap: 50px;
+        text-align: center;
+        background-image: url(./assets/img/background-numbers1.webp);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        max-width: calc($max-width - 100px);
+        background-color: var(--color-secondary);
+        margin: auto;
+        padding: 48px 40px;
+        border-radius: $border-radius;
+
+        @include mobile {
+            flex-direction: column;
+        }
+    }
+
+    .number-box {
+        width: 33%;
+
+        @include mobile {
+            width: 100%;
+        }
+
+        .number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--text-color);
+
+        }
+
+        .label {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+    }
+}

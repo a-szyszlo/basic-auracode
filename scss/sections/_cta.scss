@@ -1,0 +1,97 @@
+@use '../mixins' as *;
+
+
+/* CTA */
+
+.cta-section {
+    padding: 100px 20px;
+    background: var(--color-secondary, #f7f7f7);
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .cta-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 60px;
+        flex-wrap: wrap;
+    }
+
+    .cta-text {
+        flex: 1 1 50%;
+        text-align: left;
+
+      
+
+        .cta-desc {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            .btn {
+                padding: 14px 30px;
+                border-radius: 6px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: 0.3s;
+                cursor: pointer;
+
+                &.primary {
+                    background: var(--brand-color, #bc6d61);
+                    color: #fff;
+
+                    &:hover {
+                        background: var(--brand-color, #bc6d61);
+                    }
+                }
+
+                &.secondary {
+                    background: transparent;
+                    color: var(--brand-color, #bc6d61);
+                    border: 2px solid var(--brand-color, #bc6d61);
+
+                    &:hover {
+                        background: var(--brand-color, #bc6d61);
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    .cta-image {
+        flex: 1 1 40%;
+        text-align: right;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .cta-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .cta-text {
+            text-align: center;
+        }
+
+        .cta-image {
+            text-align: center;
+        }
+    }
+}

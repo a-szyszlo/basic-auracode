@@ -1,0 +1,45 @@
+@use '../mixins' as *;
+/* Contact */
+.contact {
+    padding: 100px 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-align: center;
+
+    p {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .contact-info {
+        margin: 30px auto;
+        max-width: 500px;
+
+        p {
+            strong {
+                color: var(--color-primary);
+            }
+        }
+    }
+
+    .contact-socials {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        list-style: none;
+        margin-top: 30px;
+        padding: 0;
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: var(--color-secondary);
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+// Shared variables and mixins
+$max-width: 1100px;
+$border-radius: 1rem;
+$box-shadow: rgba(173, 173, 173, 0.08) 0px 8px 24px 0px;
+
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
