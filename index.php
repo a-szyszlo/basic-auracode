@@ -186,9 +186,15 @@ if ($services): ?>
     <p class="contact-desc"><?php echo esc_html(get_theme_mod('contact_desc', 'Masz pytania? Skontaktuj się przez poniższe dane.')); ?></p>
 
     <div class="contact-info">
-      <p class="contact-phone"><strong>Telefon:</strong> <?php echo esc_html(get_theme_mod('contact_phone', '+48 600 000 000')); ?></p>
-      <p class="contact-email"><strong>E-mail:</strong> <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?>"><?php echo esc_html(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?></a></p>
-      <p class="contact-address"><strong>Adres:</strong> <?php echo esc_html(get_theme_mod('contact_address', 'ul. Przykładowa 12, 00-000 Warszawa')); ?></p>
+      <p class="contact-phone">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#phone"></use></svg>
+        <strong>Telefon:</strong> <?php echo esc_html(get_theme_mod('contact_phone', '+48 600 000 000')); ?></p>
+      <p class="contact-email">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#at-symbol"></use></svg>
+        <strong>E-mail:</strong> <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?>"><?php echo esc_html(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?></a></p>
+      <p class="contact-address">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#map-pin"></use></svg>
+        <strong>Adres:</strong> <?php echo esc_html(get_theme_mod('contact_address', 'ul. Przykładowa 12, 00-000 Warszawa')); ?></p>
     </div>
 
   </div>

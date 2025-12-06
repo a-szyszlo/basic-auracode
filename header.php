@@ -11,11 +11,15 @@
     <header class="site-header">
         <div class="container header-inner reveal-in-row">
             <div class="site-logo in-row">
-                <?php if (function_exists('the_custom_logo') && has_custom_logo()) {
-                    the_custom_logo();
-                } else { ?><a href="<?php echo home_url('/'); ?>"><?php bloginfo('name'); ?></a><?php } ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>">
+                    <?php if ($logo = get_theme_mod('footer_logo')): ?>
+                        <img src="<?php echo esc_url($logo); ?>" alt="Logo" />
+                    <?php else: ?>
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/placeholder-logo.png" alt="Logo" />
+                    <?php endif; ?>
+                </a>
             </div>
-            <nav class="main-nav in-row">
+            <nav class="main-nav in-row" id="primary-nav">
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'header_menu',
@@ -25,8 +29,22 @@
                 ));
                 ?>
             </nav>
+            <button class="mobile-nav-toggle" aria-label="Otwórz menu">
+                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#bars-3"></use></svg>
+            </button>
             <div class="header-cta in-row">
                 <a href="#contact" class="btn"><?php echo get_theme_mod('hero_btn1', 'Skontaktuj się'); ?></a>
             </div>
+        </div>
+
+        <div class="mobile-drawer" aria-hidden="true">
+            <div class="mobile-drawer-inner">
+                <button class="mobile-nav-close" aria-label="Zamknij menu">
+                    <svg class="icon" width="24" height="24" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#x-mark"></use></svg>
+                </button>
+                <!-- Primary nav will be moved here on mobile -->
+                <div id="mobile-nav-mount"></div>
+            </div>
+            <div class="mobile-drawer-backdrop"></div>
         </div>
     </header>
