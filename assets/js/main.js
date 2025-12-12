@@ -1,3 +1,26 @@
+// Mobile drawer menu toggle
+(function(){
+  var toggle = document.querySelector('.mobile-nav-toggle');
+  var drawer = document.querySelector('.mobile-drawer');
+  var closeBtn = document.querySelector('.mobile-nav-close');
+  var backdrop = document.querySelector('.mobile-drawer-backdrop');
+  var primaryNav = document.getElementById('primary-nav');
+  var mobileMount = document.getElementById('mobile-nav-mount');
+  var headerInner = document.querySelector('.header-inner');
+
+  function moveNavToDrawer(){ if(primaryNav && mobileMount){ mobileMount.appendChild(primaryNav); primaryNav.classList.add('column'); } }
+  function moveNavToHeader(){ if(primaryNav && headerInner){ headerInner.insertBefore(primaryNav, headerInner.querySelector('.mobile-nav-toggle')); primaryNav.classList.remove('column'); } }
+
+  function openDrawer(){ if(!drawer) return; moveNavToDrawer(); drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.documentElement.classList.add('no-scroll'); }
+  function closeDrawer(){ if(!drawer) return; drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.documentElement.classList.remove('no-scroll'); moveNavToHeader(); }
+
+  if (toggle) toggle.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+  // Close on ESC
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeDrawer(); });
+})();
 document.addEventListener("DOMContentLoaded", () => {
   const counters = document.querySelectorAll(".number-box .number");
   const duration = 2000; 

@@ -1,0 +1,36 @@
+@use '../mixins' as *;
+
+/* Hero */
+.hero {
+    padding: 80px 0;
+
+    &-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 50%;
+        gap: 40px;
+        align-items: center;
+        max-width: $max-width;
+
+        @include tablet {
+            grid-template-columns: 1fr 30%;
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin: 0 0 10px;
+    }
+
+    p {
+        color: var(--text-color);
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+}

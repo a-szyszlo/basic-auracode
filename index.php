@@ -88,11 +88,16 @@ if ($services): ?>
               <h3><?php echo esc_html($service['title']); ?></h3>
               <p><?php echo esc_html($service['desc']); ?></p>
 
-              <?php if (!empty($service['hasButton']) && !empty($service['buttonLink'])): ?>
-                <a href="<?php echo esc_url($service['buttonLink']); ?>" class="service-btn">
-                  Zobacz więcej
-                </a>
-              <?php endif; ?>
+                <?php 
+                  $btnEnabled = !empty($service['button_enabled']) ? $service['button_enabled'] : (!empty($service['hasButton']) ? $service['hasButton'] : false);
+                  $btnUrl     = !empty($service['button_url']) ? $service['button_url'] : (!empty($service['buttonLink']) ? $service['buttonLink'] : '');
+                  $btnText    = !empty($service['button_text']) ? $service['button_text'] : (!empty($service['buttonText']) ? $service['buttonText'] : 'Zobacz więcej');
+                ?>
+                <?php if ($btnEnabled && !empty($btnUrl)) : ?>
+                  <a href="<?php echo esc_url($btnUrl); ?>" class="service-btn">
+                    <?php echo esc_html($btnText); ?>
+                  </a>
+                <?php endif; ?>
             </div>
           </div>
         <?php endforeach; ?>
@@ -136,6 +141,19 @@ if ($services): ?>
   </div>
 </section>
 
+<!-- USER CONTENT -->
+<?php if (have_posts()) : ?>
+  <section class="user-content" id="content">
+    <div class="container">
+      <?php while (have_posts()) : the_post(); ?>
+        <div class="entry-content reveal">
+          <?php echo apply_filters('the_content', get_the_content()); ?>
+        </div>
+      <?php endwhile; ?>
+    </div>
+  </section>
+<?php endif; ?>
+
 <!-- PROCESS -->
 <section class="process-section">
   <div class="container">
@@ -168,9 +186,15 @@ if ($services): ?>
     <p class="contact-desc"><?php echo esc_html(get_theme_mod('contact_desc', 'Masz pytania? Skontaktuj się przez poniższe dane.')); ?></p>
 
     <div class="contact-info">
-      <p class="contact-phone"><strong>Telefon:</strong> <?php echo esc_html(get_theme_mod('contact_phone', '+48 600 000 000')); ?></p>
-      <p class="contact-email"><strong>E-mail:</strong> <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?>"><?php echo esc_html(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?></a></p>
-      <p class="contact-address"><strong>Adres:</strong> <?php echo esc_html(get_theme_mod('contact_address', 'ul. Przykładowa 12, 00-000 Warszawa')); ?></p>
+      <p class="contact-phone">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#phone"></use></svg>
+        <strong>Telefon:</strong> <?php echo esc_html(get_theme_mod('contact_phone', '+48 600 000 000')); ?></p>
+      <p class="contact-email">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#at-symbol"></use></svg>
+        <strong>E-mail:</strong> <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?>"><?php echo esc_html(get_theme_mod('contact_email', 'kontakt@twojadomena.pl')); ?></a></p>
+      <p class="contact-address">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/sprite-icons.svg#map-pin"></use></svg>
+        <strong>Adres:</strong> <?php echo esc_html(get_theme_mod('contact_address', 'ul. Przykładowa 12, 00-000 Warszawa')); ?></p>
     </div>
 
   </div>
