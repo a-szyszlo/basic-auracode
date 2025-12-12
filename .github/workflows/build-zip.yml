@@ -8,31 +8,31 @@ jobs:
   build-zip:
     runs-on: ubuntu-latest
     steps:
-      # Checkout repo bez persistowania credentials
+      # 1. Checkout repo
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      # Tworzymy folder dist i kopiujemy potrzebne pliki
-      - name: Copy necessary files
+      # 2. Tworzymy folder dist z wykluczeniami
+      - name: Prepare dist folder
         run: |
           mkdir -p dist
-          rsync -av --exclude='scss' --exclude='.github' --exclude='README.md' ./ dist/
+          rsync -av \
+            --exclude='.github' \
+            --exclude='README.md' \
+            --exclude='scss' \
+            --exclude='node_modules' \
+            --exclude='dist' \
+            ./ dist/
 
-      # Tworzymy ZIP w folderze dist
+      # 3. Tworzymy ZIP
       - name: Create ZIP
         run: |
           cd dist
-          zip -r basic-auracode.zip .
+          zip -r ../basic-auracode.zip .
+          cd ..
 
-      # Commitujemy i pushujemy ZIP do repo
-      - name: Commit ZIP
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add dist/basic-auracode.zip
-          git commit -m "Update ZIP for WP Playground" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push origin master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 4. Upload ZIP jako artefakt workflow
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: basic-auracode
+          path: basic-auracode.zip
