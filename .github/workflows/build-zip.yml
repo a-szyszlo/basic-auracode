@@ -1,4 +1,4 @@
-name: Build ZIP and Release
+name: Build ZIP for WP Playground
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ jobs:
       # Tworzymy folder dist i kopiujemy potrzebne pliki
       - name: Copy necessary files
         run: |
-          mkdir dist
+          mkdir -p dist
           rsync -av --exclude='scss' --exclude='.github' --exclude='README.md' ./ dist/
 
       # Tworzymy ZIP
@@ -22,22 +22,13 @@ jobs:
           cd dist
           zip -r ../basic-auracode.zip .
 
-      # Tworzymy tag automatycznie
-      - name: Create Tag
-        id: tag
+      # Commitujemy i pushujemy ZIP do repo
+      - name: Commit ZIP
         run: |
-          TAG="v1.0.$(date +'%Y%m%d%H%M%S')"
-          echo "TAG=$TAG" >> $GITHUB_ENV
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git tag $TAG
-          git push origin $TAG
-
-      # Publikujemy ZIP na GitHub Release
-      - name: Upload ZIP to release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: basic-auracode.zip
-          tag_name: ${{ env.TAG }}
+          git add basic-auracode.zip
+          git commit -m "Update ZIP for WP Playground"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
