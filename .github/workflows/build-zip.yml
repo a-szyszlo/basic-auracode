@@ -1,0 +1,30 @@
+name: Build ZIP for Playground
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+  
+      - name: Copy necessary files
+        run: |
+          mkdir dist
+          rsync -av --exclude='scss' --exclude='.github' --exclude='README.md' ./ dist/
+
+      - name: Create ZIP
+        run: |
+          cd dist
+          zip -r ../basic-auracode.zip .
+
+
+      - name: Upload ZIP to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: basic-auracode.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
