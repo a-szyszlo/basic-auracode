@@ -8,7 +8,10 @@ jobs:
   build-zip:
     runs-on: ubuntu-latest
     steps:
+      # Checkout repo bez persistowania credentials
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       # Tworzymy folder dist i kopiujemy potrzebne pliki
       - name: Copy necessary files
@@ -16,18 +19,20 @@ jobs:
           mkdir -p dist
           rsync -av --exclude='scss' --exclude='.github' --exclude='README.md' ./ dist/
 
-      # Tworzymy ZIP
+      # Tworzymy ZIP w folderze dist
       - name: Create ZIP
         run: |
           cd dist
-          zip -r ../basic-auracode.zip .
+          zip -r basic-auracode.zip .
+          mv basic-auracode.zip ../dist/basic-auracode.zip
+          cd ..
 
       # Commitujemy i pushujemy ZIP do repo
       - name: Commit ZIP
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add basic-auracode.zip
+          git add dist/basic-auracode.zip
           git commit -m "Update ZIP for WP Playground" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin master
