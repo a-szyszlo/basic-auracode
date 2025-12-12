@@ -23,11 +23,11 @@ jobs:
             --exclude='dist' \
             ./ dist/
 
-      # 3. Tworzymy ZIP
+      # 3. Tworzymy ZIP BEZ folderu dist w środku
       - name: Create ZIP
         run: |
           cd dist
-          zip -r ../basic-auracode.zip .
+          zip -r ../basic-auracode.zip ./*
           cd ..
 
       # 4. Upload ZIP jako artefakt workflow
