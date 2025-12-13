@@ -22,12 +22,8 @@
       "themeFolderName": "auracode-basic"
     },
     {
-      "step": "wpCli",
-      "command": "language core install pl_PL && language core activate pl_PL"
-    },
-    {
       "step": "runPHP",
-      "code": "update_option('WPLANG','pl_PL');"
+      "code": "<?php require_once 'wp-load.php'; require_once 'wp-admin/includes/translation-install.php'; wp_download_language_pack('pl_PL'); update_option('WPLANG', 'pl_PL'); ?>"
     }
   ]
 }
