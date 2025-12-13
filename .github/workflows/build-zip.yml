@@ -1,4 +1,5 @@
 name: Build ZIP for WP Playground
+
 on:
   push:
     branches:
@@ -7,30 +8,32 @@ on:
 jobs:
   build-zip:
     runs-on: ubuntu-latest
+
     steps:
       # 1. Checkout repo
       - uses: actions/checkout@v3
 
-      # 2. Tworzymy folder dist z wykluczeniami
-      - name: Prepare dist folder
+      # 2. Przygotowanie czystej struktury motywu
+      - name: Prepare theme folder
         run: |
-          mkdir -p dist
+          mkdir -p build/auracode-basic
           rsync -av \
             --exclude='.github' \
             --exclude='README.md' \
             --exclude='scss' \
             --exclude='node_modules' \
             --exclude='dist' \
-            ./ dist/
+            --exclude='build' \
+            ./ build/auracode-basic/
 
-      # 3. Tworzymy ZIP BEZ folderu dist w środku
+      # 3. ZIP z folderem motywu (KLUCZOWE)
       - name: Create ZIP
         run: |
-          cd dist
-          zip -r ../basic-auracode.zip ./*
+          cd build
+          zip -r ../basic-auracode.zip auracode-basic
           cd ..
 
-      # 4. Upload ZIP jako artefakt workflow
+      # 4. Upload ZIP jako artefakt
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
