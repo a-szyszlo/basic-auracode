@@ -1,20 +1,22 @@
-name: Build ZIP for WP Playground
+name: Build ZIP and Release
 
 on:
   push:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
-  build-zip:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
       - uses: actions/checkout@v3
 
-      # 2. Przygotowanie czystej struktury motywu
-      - name: Prepare theme folder
+      # 1. Przygotowanie folderu motywu
+      - name: Prepare theme
         run: |
           mkdir -p build/auracode-basic
           rsync -av \
@@ -22,20 +24,24 @@ jobs:
             --exclude='README.md' \
             --exclude='scss' \
             --exclude='node_modules' \
-            --exclude='dist' \
             --exclude='build' \
             ./ build/auracode-basic/
 
-      # 3. ZIP z folderem motywu (KLUCZOWE)
+      # 2. ZIP
       - name: Create ZIP
         run: |
           cd build
-          zip -r ../basic-auracode.zip 
+          zip -r ../basic-auracode.zip auracode-basic
           cd ..
 
-      # 4. Upload ZIP jako artefakt
-      - name: Upload ZIP artifact
-        uses: actions/upload-artifact@v4
+      # 3. Ustal wersję (timestamp – najprościej)
+      - name: Set version
+        run: echo "VERSION=v1.0.$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      # 4. Create Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: basic-auracode
-          path: basic-auracode.zip
+          tag_name: ${{ env.VERSION }}
+          name: AuraCode Basic ${{ env.VERSION }}
+          files: basic-auracode.zip
