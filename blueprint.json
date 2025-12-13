@@ -5,6 +5,7 @@
     "php": "8.2",
     "wp": "latest"
   },
+  "locale": "pl_PL",
   "features": {
     "networking": true
   },
