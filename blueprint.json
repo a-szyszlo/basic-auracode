@@ -1,0 +1,24 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/customize.php",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "installTheme",
+      "themeZipFile": {
+        "resource": "url",
+        "url": "https://github.com/a-szyszlo/basic-auracode/releases/latest/download/basic-auracode.zip"
+      }
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "auracode-basic"
+    }
+  ]
+}
