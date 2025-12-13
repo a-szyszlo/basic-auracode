@@ -30,7 +30,7 @@ jobs:
       - name: Create ZIP
         run: |
           cd build
-          zip -r ../basic-auracode.zip auracode-basic
+          zip -r ../basic-auracode.zip 
           cd ..
 
       # 4. Upload ZIP jako artefakt
