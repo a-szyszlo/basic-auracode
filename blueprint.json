@@ -21,6 +21,14 @@
     {
       "step": "activateTheme",
       "themeFolderName": "auracode-basic"
+    },
+    {
+      "step": "wpCli",
+      "command": "language core install pl_PL && language core activate pl_PL"
+    },
+    {
+      "step": "runPHP",
+      "code": "update_option('WPLANG','pl_PL');"
     }
   ]
 }
